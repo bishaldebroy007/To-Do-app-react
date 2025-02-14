@@ -1,21 +1,32 @@
 import cross from '../assets/cross.jpg'
+import { useState } from 'react';
 
 const ToDoList = () => {
+
+    const [task, setTask] = useState('');
+
+    function handleCheckboxChange(e) {
+        e.preventDefault();
+        console.log(task);
+        setTask('');
+    }
+
     return (
-        <header className='flex justify-center'>
-            <ToDoItem />
+        <header>
+            <ToDoItem handleCheckboxChange={handleCheckboxChange} task={task} setTask={setTask} />
         </header>
     )
 }
 
-const ToDoItem = () => {
+const ToDoItem = ({ handleCheckboxChange, task, setTask }) => {
+
     return (
-        <div className='container w-xl'>
-            <div className='headerContainer flex items-center justify-between mb-8'>
+        <div className='container'>
+            <div className='headerContainer'>
                 <h2 className=''>To Do List</h2>
             </div>
-            <form action="">
-                <input className='w-full outline-offset-2' type="text" placeholder='Add a New Task' />
+            <form onSubmit={handleCheckboxChange}>
+                <input className='w-full outline-offset-2' type="text" placeholder='Add a New Task' value={task} onChange={(e) => setTask(e.target.value)} />
             </form>
 
             <ul>
