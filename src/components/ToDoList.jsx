@@ -17,28 +17,10 @@ const ToDoItem = () => {
             <form action="">
                 <input className='w-full outline-offset-2' type="text" placeholder='Add a New Task' />
             </form>
+
             <ul>
-                <li>
-                    <div>
-                        <input type="checkbox" />
-                        <p>Task added here</p>
-                    </div>
-                    <img src={cross} alt="" />
-                </li>
-
-                <li className='footer'>
-                    <div className='item'>
-                        <p>2 Items Left</p>
-                    </div>
-
-                    <div className='active'>
-                        <p>0 Completed</p>
-                    </div>
-
-                    <div className='clear'>
-                        <p>Clear Completed</p>
-                    </div>
-                </li>
+                <TaskList />
+                <FooterPart />
             </ul>
             <div>
                 <button className="bg-sky-500 hover:bg-sky-700">Save changes</button>
@@ -47,6 +29,35 @@ const ToDoItem = () => {
     )
 }
 
+const TaskList = () => {
+    return (
+        <li>
+            <div>
+                <input type="checkbox" />
+                <p>Task added here</p>
+            </div>
+            <img src={cross} alt="" />
+        </li>
+    );
+};
+
+const FooterPart = () => {
+    return (
+        <li className='footer'>
+            <div className='item'>
+                <p>2 Items Left</p>
+            </div>
+
+            <div className='active'>
+                <p>0 Completed</p>
+            </div>
+
+            <div className='clear'>
+                <p>Clear Completed</p>
+            </div>
+        </li>
+    );
+};
 export default ToDoList
 
 

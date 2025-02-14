@@ -107,5 +107,6 @@ form input {
 }
 
 .clear {
+    color: var(--VeryDarkBlue);
     cursor: pointer;
 }
