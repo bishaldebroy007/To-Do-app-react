@@ -2,24 +2,25 @@ import cross from '../assets/cross.jpg'
 import { useState } from 'react';
 
 const ToDoList = () => {
-
     const [task, setTask] = useState('');
+    const [tasks, setTasks] = useState([]);
 
     function handleCheckboxChange(e) {
         e.preventDefault();
-        console.log(task);
-        setTask('');
+        if (task.trim()) {
+            setTasks([...tasks, { text: task, completed: false }]);
+            setTask('');
+        }
     }
 
     return (
         <header>
-            <ToDoItem handleCheckboxChange={handleCheckboxChange} task={task} setTask={setTask} />
+            <ToDoItem handleCheckboxChange={handleCheckboxChange} task={task} setTask={setTask} tasks={tasks} setTasks={setTasks} />
         </header>
     )
 }
 
-const ToDoItem = ({ handleCheckboxChange, task, setTask }) => {
-
+const ToDoItem = ({ handleCheckboxChange, task, setTask, tasks, setTasks }) => {
     return (
         <div className='container'>
             <div className='headerContainer'>
@@ -30,8 +31,8 @@ const ToDoItem = ({ handleCheckboxChange, task, setTask }) => {
             </form>
 
             <ul>
-                <TaskList />
-                <FooterPart />
+                <TaskList tasks={tasks} setTasks={setTasks} />
+                <FooterPart tasks={tasks} />
             </ul>
             <div>
                 <button className="bg-sky-500 hover:bg-sky-700">Save changes</button>
@@ -40,27 +41,45 @@ const ToDoItem = ({ handleCheckboxChange, task, setTask }) => {
     )
 }
 
-const TaskList = () => {
+const TaskList = ({ tasks, setTasks }) => {
+    const toggleTaskCompletion = (index) => {
+        const newTasks = [...tasks];
+        newTasks[index].completed = !newTasks[index].completed;
+        setTasks(newTasks);
+    };
+
+    const removeTask = (index) => {
+        const newTasks = tasks.filter((_, i) => i !== index);
+        setTasks(newTasks);
+    };
+
     return (
-        <li>
-            <div>
-                <input type="checkbox" />
-                <p>Task added here</p>
-            </div>
-            <img src={cross} alt="" />
-        </li>
+        <>
+            {tasks.map((task, index) => (
+                <li key={index}>
+                    <div>
+                        <input type="checkbox" checked={task.completed} onChange={() => toggleTaskCompletion(index)} />
+                        <p>{task.text}</p>
+                    </div>
+                    <img src={cross} alt="Remove" onClick={() => removeTask(index)} />
+                </li>
+            ))}
+        </>
     );
 };
 
-const FooterPart = () => {
+const FooterPart = ({ tasks }) => {
+    const itemsLeft = tasks.filter(task => !task.completed).length;
+    const completedTasks = tasks.filter(task => task.completed).length;
+
     return (
         <li className='footer'>
             <div className='item'>
-                <p>2 Items Left</p>
+                <p>{itemsLeft} Items Left</p>
             </div>
 
             <div className='active'>
-                <p>0 Completed</p>
+                <p>{completedTasks} Completed</p>
             </div>
 
             <div className='clear'>
@@ -69,6 +88,5 @@ const FooterPart = () => {
         </li>
     );
 };
-export default ToDoList
 
-
+export default ToDoList;
