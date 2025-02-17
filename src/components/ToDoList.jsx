@@ -1,4 +1,4 @@
-import cross from '../assets/cross.jpg'
+import cross from '../assets/cross.png';
 import { useState } from 'react';
 
 const ToDoList = () => {
@@ -34,9 +34,9 @@ const ToDoItem = ({ handleCheckboxChange, task, setTask, tasks, setTasks }) => {
                 <TaskList tasks={tasks} setTasks={setTasks} />
                 <FooterPart tasks={tasks} />
             </ul>
-            <div>
+            {/* <div>
                 <button className="bg-sky-500 hover:bg-sky-700">Save changes</button>
-            </div>
+            </div> */}
         </div>
     )
 }
@@ -49,7 +49,7 @@ const TaskList = ({ tasks, setTasks }) => {
     };
 
     const removeTask = (index) => {
-        const newTasks = tasks.filter((_, i) => i !== index);
+        const newTasks = tasks.filter((task, i) => i !== index);
         setTasks(newTasks);
     };
 
@@ -62,6 +62,7 @@ const TaskList = ({ tasks, setTasks }) => {
                         <p>{task.text}</p>
                     </div>
                     <img src={cross} alt="Remove" onClick={() => removeTask(index)} />
+
                 </li>
             ))}
         </>
@@ -82,9 +83,9 @@ const FooterPart = ({ tasks }) => {
                 <p>{completedTasks} Completed</p>
             </div>
 
-            <div className='clear'>
+            {/* <div className='clear'>
                 <p>Clear Completed</p>
-            </div>
+            </div> */}
         </li>
     );
 };
