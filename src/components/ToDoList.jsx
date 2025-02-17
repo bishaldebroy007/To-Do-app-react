@@ -46,42 +46,46 @@ const ToDoList = () => {
                     <input className='w-full text-lg font-medium p-4 rounded-lg border-none outline-none text-pretty' type="text" placeholder='Add a New Task' value={task} onChange={(e) => setTask(e.target.value)} />
                     <button type="submit" className='animate-pulse cursor-pointer bg-indigo-400 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg'>Add</button>
                 </form>
-                <div className='flex justify-around mt-4 drop-shadow-lg'>
-                    <button
-                        className={`p-1 rounded-md ${filter === 'all' ? 'bg-indigo-400' : 'bg-indigo-500 hover:bg-indigo-800'}`}
-                        onClick={() => setFilter('all')}
-                    >
-                        All
-                    </button>
-                    <button
-                        className={`p-1 rounded-md ${filter === 'active' ? 'bg-indigo-400' : 'bg-indigo-500 hover:bg-indigo-800'}`}
-                        onClick={() => setFilter('active')}
-                    >
-                        Active
-                    </button>
-                    <button
-                        className={`p-1 rounded-md ${filter === 'completed' ? 'bg-indigo-400' : 'bg-indigo-500 hover:bg-indigo-800'}`}
-                        onClick={() => setFilter('completed')}
-                    >
-                        Completed
-                    </button>
-                </div>
-                <ul className='bg-white flex flex-col p-4 rounded-lg mt-10'>
-                    {filteredTasks.map((task) => (
-                        <li key={task.id} className='flex justify-between items-center py-4 border-b border-gray-300 text-black'>
-                            <div className='flex items-center drop-shadow-lg'>
-                                <input type="checkbox" className='w-4 h-4 mr-4' checked={task.completed} onChange={() => toggleTaskCompletion(task.id)} />
-                                <input
-                                    type="text"
-                                    className={`border-none bg-transparent focus:outline-none ${task.completed ? 'line-through' : ''}`}
-                                    value={task.text}
-                                    onChange={(e) => editTask(task.id, e.target.value)}
-                                />
-                            </div>
-                            <img className='w-5 h-5 cursor-pointer' src={cross} alt="Remove" onClick={() => removeTask(task.id)} />
-                        </li>
-                    ))}
-                </ul>
+                {tasks.length > 0 && (
+                    <>
+                        <div className='flex justify-around mt-4 drop-shadow-lg'>
+                            <button
+                                className={`p-1 rounded-md ${filter === 'all' ? 'bg-indigo-300' : 'bg-indigo-500 hover:bg-indigo-800'}`}
+                                onClick={() => setFilter('all')}
+                            >
+                                All
+                            </button>
+                            <button
+                                className={`p-1 rounded-md ${filter === 'active' ? 'bg-indigo-300' : 'bg-indigo-500 hover:bg-indigo-800'}`}
+                                onClick={() => setFilter('active')}
+                            >
+                                Active
+                            </button>
+                            <button
+                                className={`p-1 rounded-md ${filter === 'completed' ? 'bg-indigo-300' : 'bg-indigo-500 hover:bg-indigo-800'}`}
+                                onClick={() => setFilter('completed')}
+                            >
+                                Completed
+                            </button>
+                        </div>
+                        <ul className='bg-white flex flex-col p-4 rounded-lg mt-10'>
+                            {filteredTasks.map((task) => (
+                                <li key={task.id} className='flex justify-between items-center py-4 border-b border-gray-300 text-black'>
+                                    <div className='flex items-center drop-shadow-lg'>
+                                        <input type="checkbox" className='w-4 h-4 mr-4' checked={task.completed} onChange={() => toggleTaskCompletion(task.id)} />
+                                        <input
+                                            type="text"
+                                            className={`border-none bg-transparent focus:outline-none ${task.completed ? 'line-through' : ''}`}
+                                            value={task.text}
+                                            onChange={(e) => editTask(task.id, e.target.value)}
+                                        />
+                                    </div>
+                                    <img className='w-5 h-5 cursor-pointer' src={cross} alt="Remove" onClick={() => removeTask(task.id)} />
+                                </li>
+                            ))}
+                        </ul>
+                    </>
+                )}
             </div>
         </div>
     );
